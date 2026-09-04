@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
-import bottle1 from "@/assets/bottle-1.jpg";
-import bottle2 from "@/assets/bottle-2.jpg";
-import bottle3 from "@/assets/bottle-3.jpg";
+import bottle1 from "@/assets/bottle-1.jpg.asset.json";
+import bottle2 from "@/assets/bottle-2.jpg.asset.json";
+import bottle3 from "@/assets/bottle-3.jpg.asset.json";
+import heroVideo from "@/assets/hero-video.mp4.asset.json";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
