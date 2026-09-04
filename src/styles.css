@@ -164,3 +164,117 @@
     color: var(--color-foreground);
   }
 }
+
+@layer base {
+  body {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+  }
+  [dir="rtl"],
+  .ar {
+    font-family: var(--font-arabic);
+  }
+}
+
+@utility text-gold {
+  background-image: var(--gradient-gold);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@utility veil {
+  background-image: var(--gradient-veil);
+}
+
+@utility stage-3d {
+  perspective: 1400px;
+  transform-style: preserve-3d;
+}
+
+@utility hairline {
+  border: 1px solid var(--border);
+}
+
+@keyframes bottle-in {
+  0% {
+    opacity: 0;
+    transform: translateY(60px) rotateY(-70deg) scale(0.85);
+    filter: blur(14px);
+  }
+  18%,
+  78% {
+    opacity: 1;
+    transform: translateY(0) rotateY(0deg) scale(1);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px) rotateY(70deg) scale(0.85);
+    filter: blur(14px);
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(-10px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility animate-float {
+  animation: float-y 7s ease-in-out infinite;
+}
+
+@utility animate-spin-slow {
+  animation: spin-slow 40s linear infinite;
+}
+
+@utility animate-rise {
+  animation: rise 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility shimmer-line {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    oklch(0.84 0.13 86 / 70%),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 4s linear infinite;
+}
