@@ -1,15 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import bottle1 from "@/assets/bottle-1.jpg.asset.json";
 import bottle2 from "@/assets/bottle-2.jpg.asset.json";
 import bottle3 from "@/assets/bottle-3.jpg.asset.json";
-import bottle4 from "@/assets/bottle-4.jpg.asset.json";
-import bottle5 from "@/assets/bottle-5.jpg.asset.json";
-import bottle6 from "@/assets/bottle-6.jpg.asset.json";
-import bottle7 from "@/assets/bottle-7.jpg.asset.json";
-import bottle8 from "@/assets/bottle-8.jpg.asset.json";
-import bottle9 from "@/assets/bottle-9.jpg.asset.json";
 import heroVideo from "@/assets/hero-video.mp4.asset.json";
 
 
@@ -165,419 +159,49 @@ function Hero() {
   );
 }
 
-type Gender = "men" | "women" | "unisex";
-type Conc = "extrait" | "edp" | "edt";
-
-type Product = {
-  img: string;
-  name: string;
-  ar: string;
-  notes: string;
-  arNotes: string;
-  gender: Gender;
-  conc: Conc;
-  size: number;
-  price: number;
-  badge?: string;
-};
-
-const PRODUCTS: Product[] = [
-  {
-    img: bottle1.url,
-    name: "Elysium",
-    ar: "إليزيوم",
-    notes: "Amber · Saffron · Vanilla",
-    arNotes: "العنبر · الزعفران · الفانيليا",
-    gender: "unisex",
-    conc: "extrait",
-    size: 100,
-    price: 1450,
-    badge: "Signature",
-  },
-  {
-    img: bottle2.url,
-    name: "Émeraude",
-    ar: "إميرود",
-    notes: "Fig · Vetiver · Green Moss",
-    arNotes: "التين · الفيتيفر · الطحلب",
-    gender: "women",
-    conc: "edp",
-    size: 75,
-    price: 1180,
-  },
-  {
-    img: bottle3.url,
-    name: "Oud Majesté",
-    ar: "عود ماجستيه",
-    notes: "Oud · Rose · Sandalwood",
-    arNotes: "العود · الورد · خشب الصندل",
-    gender: "men",
-    conc: "extrait",
-    size: 100,
-    price: 2100,
-    badge: "Best Seller",
-  },
-  {
-    img: bottle4.url,
-    name: "Nuit Noire",
-    ar: "ليل أسود",
-    notes: "Black Pepper · Leather · Tonka",
-    arNotes: "الفلفل الأسود · الجلد · التونكا",
-    gender: "men",
-    conc: "edp",
-    size: 100,
-    price: 1620,
-  },
-  {
-    img: bottle5.url,
-    name: "Rosé Éclat",
-    ar: "روزيه إيكلا",
-    notes: "Peony · Lychee · White Musk",
-    arNotes: "الفاوانيا · الليتشي · المسك الأبيض",
-    gender: "women",
-    conc: "edt",
-    size: 50,
-    price: 890,
-    badge: "New",
-  },
-  {
-    img: bottle6.url,
-    name: "Jardin d'Or",
-    ar: "حديقة الذهب",
-    notes: "Bergamot · Jasmine · Cedar",
-    arNotes: "البرغموت · الياسمين · الأرز",
-    gender: "unisex",
-    conc: "edp",
-    size: 75,
-    price: 1340,
-  },
-  {
-    img: bottle7.url,
-    name: "Grenat",
-    ar: "غرونا",
-    notes: "Cherry · Almond · Benzoin",
-    arNotes: "الكرز · اللوز · البنزوين",
-    gender: "women",
-    conc: "extrait",
-    size: 50,
-    price: 1750,
-  },
-  {
-    img: bottle8.url,
-    name: "Bleu Impérial",
-    ar: "بلو إمبريال",
-    notes: "Marine · Sage · Ambergris",
-    arNotes: "البحرية · المريمية · العنبر",
-    gender: "men",
-    conc: "edt",
-    size: 100,
-    price: 960,
-  },
-  {
-    img: bottle9.url,
-    name: "Dhahab",
-    ar: "ذهب",
-    notes: "Saffron · Agarwood · Amber",
-    arNotes: "الزعفران · دهن العود · العنبر",
-    gender: "unisex",
-    conc: "extrait",
-    size: 50,
-    price: 2850,
-    badge: "Limited",
-  },
-];
-
-const GENDERS: { id: Gender | "all"; en: string; ar: string }[] = [
-  { id: "all", en: "All", ar: "الكل" },
-  { id: "men", en: "For Him", ar: "رجالي" },
-  { id: "women", en: "For Her", ar: "حريمي" },
-  { id: "unisex", en: "Unisex", ar: "للجنسين" },
-];
-
-const CONCS: { id: Conc | "all"; en: string; ar: string }[] = [
-  { id: "all", en: "All", ar: "الكل" },
-  { id: "extrait", en: "Extrait", ar: "مركّز" },
-  { id: "edp", en: "Eau de Parfum", ar: "أو دو بارفان" },
-  { id: "edt", en: "Eau de Toilette", ar: "أو دو تواليت" },
-];
-
-const CONC_LABEL: Record<Conc, string> = {
-  extrait: "Extrait de Parfum",
-  edp: "Eau de Parfum",
-  edt: "Eau de Toilette",
-};
-
-type ViewMode = "grid" | "list" | "gallery";
-
-function Chip({
-  active,
-  onClick,
-  en,
-  ar,
-}: {
-  active: boolean;
-  onClick: () => void;
-  en: string;
-  ar: string;
-}) {
+function Collection() {
   return (
-    <button
-      onClick={onClick}
-      className={`group rounded-full border px-5 py-2 text-[0.7rem] uppercase tracking-[0.28em] transition-all duration-500 ${
-        active
-          ? "border-primary bg-primary/10 text-primary"
-          : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"
-      }`}
-    >
-      {en}
-      <span className="ar ms-2 text-sm normal-case tracking-normal opacity-70">
-        {ar}
-      </span>
-    </button>
-  );
-}
-
-function Price({ v }: { v: number }) {
-  return <>{v.toLocaleString("en-US")} EGP</>;
-}
-
-function ProductCard({ p, mode }: { p: Product; mode: ViewMode }) {
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-
-  if (mode === "list") {
-    return (
-      <article className="hairline group flex items-center gap-6 rounded-lg bg-card/40 p-4 transition-colors duration-500 hover:bg-card/70">
-        <div className="h-28 w-24 shrink-0 overflow-hidden rounded-md">
-          <img
-            src={p.img}
-            alt={p.name}
-            loading="lazy"
-            width={1024}
-            height={1280}
-            className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-110"
-          />
-        </div>
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-baseline gap-x-3">
-            <h3 className="text-2xl font-light text-gold">{p.name}</h3>
-            <p className="ar text-base text-foreground/70">{p.ar}</p>
-          </div>
-          <p className="mt-2 truncate text-[0.65rem] uppercase tracking-[0.3em] text-muted-foreground">
-            {CONC_LABEL[p.conc]} · {p.notes}
-          </p>
-        </div>
-        <div className="shrink-0 text-end">
-          <p className="text-sm text-foreground/85">
-            <Price v={p.price} />
-          </p>
-          <p className="mt-1 text-[0.65rem] uppercase tracking-[0.3em] text-muted-foreground">
-            {p.size} ml
-          </p>
-        </div>
-      </article>
-    );
-  }
-
-  const tall = mode === "gallery";
-
-  return (
-    <article
-      className="stage-3d group hairline relative overflow-hidden rounded-lg bg-card/40"
-      onMouseMove={(e) => {
-        const r = e.currentTarget.getBoundingClientRect();
-        setTilt({
-          y: ((e.clientX - r.left) / r.width - 0.5) * 12,
-          x: -((e.clientY - r.top) / r.height - 0.5) * 10,
-        });
-      }}
-      onMouseLeave={() => setTilt({ x: 0, y: 0 })}
-    >
-      <div
-        className="transition-transform duration-500 ease-out"
-        style={{
-          transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-          transformStyle: "preserve-3d",
-        }}
-      >
-        <div
-          className={`relative overflow-hidden ${tall ? "aspect-[3/5]" : "aspect-[4/5]"}`}
-        >
-          <img
-            src={p.img}
-            alt={`${p.name} — ${p.ar} luxury perfume bottle`}
-            loading="lazy"
-            width={1024}
-            height={1280}
-            className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-card via-card/10 to-transparent opacity-90" />
-          {p.badge && (
-            <span className="absolute start-4 top-4 rounded-full border border-primary/40 bg-background/60 px-3 py-1 text-[0.6rem] uppercase tracking-[0.3em] text-primary backdrop-blur-sm">
-              {p.badge}
-            </span>
-          )}
-          <span className="absolute end-4 top-4 text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
-            {p.conc}
-          </span>
-        </div>
-
-        <div className="relative -mt-20 p-7">
-          <h3 className="text-3xl font-light text-gold">{p.name}</h3>
-          <p className="ar mt-1 text-lg text-foreground/70">{p.ar}</p>
-          <div className="shimmer-line mt-4 h-px w-16" />
-          <p className="mt-4 text-[0.68rem] uppercase tracking-[0.3em] text-muted-foreground">
-            {p.notes}
-          </p>
-          <p className="ar mt-1 text-sm text-muted-foreground">{p.arNotes}</p>
-          <div className="mt-6 flex items-center justify-between">
-            <span className="text-sm text-foreground/85">
-              {p.size} ml · <Price v={p.price} />
-            </span>
-            <span className="text-xs uppercase tracking-[0.3em] text-primary transition-all group-hover:tracking-[0.45em]">
-              Discover
-            </span>
-          </div>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-function Products() {
-  const [gender, setGender] = useState<Gender | "all">("all");
-  const [conc, setConc] = useState<Conc | "all">("all");
-  const [sort, setSort] = useState<"featured" | "asc" | "desc">("featured");
-  const [mode, setMode] = useState<ViewMode>("grid");
-
-  const items = useMemo(() => {
-    const list = PRODUCTS.filter(
-      (p) =>
-        (gender === "all" || p.gender === gender) &&
-        (conc === "all" || p.conc === conc),
-    );
-    if (sort === "asc") return [...list].sort((a, b) => a.price - b.price);
-    if (sort === "desc") return [...list].sort((a, b) => b.price - a.price);
-    return list;
-  }, [gender, conc, sort]);
-
-  const layout =
-    mode === "list"
-      ? "grid-cols-1"
-      : mode === "gallery"
-        ? "grid-cols-2 lg:grid-cols-4"
-        : "sm:grid-cols-2 lg:grid-cols-3";
-
-  return (
-    <section id="products" className="relative mx-auto max-w-7xl px-6 py-28">
-      <header className="mb-12 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="text-xs uppercase tracking-[0.5em] text-muted-foreground">
-            Boutique
-          </p>
-          <h2 className="mt-4 text-5xl font-light">
-            The <span className="text-gold">Collection</span>
-          </h2>
-        </div>
-        <p className="ar text-2xl font-light text-muted-foreground">
-          مجموعة العطور
-        </p>
+    <section className="relative mx-auto max-w-7xl px-6 py-28">
+      <header className="mb-16 flex flex-wrap items-end justify-between gap-4">
+        <h2 className="text-5xl font-light">
+          The <span className="text-gold">Collection</span>
+        </h2>
+        <p className="ar text-2xl font-light text-muted-foreground">المجموعة</p>
       </header>
 
-      <div className="hairline mb-12 rounded-xl bg-card/30 p-6">
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="me-2 text-[0.6rem] uppercase tracking-[0.35em] text-muted-foreground">
-            Family / الفئة
-          </span>
-          {GENDERS.map((g) => (
-            <Chip
-              key={g.id}
-              en={g.en}
-              ar={g.ar}
-              active={gender === g.id}
-              onClick={() => setGender(g.id)}
-            />
-          ))}
-        </div>
-
-        <div className="mt-5 flex flex-wrap items-center gap-3">
-          <span className="me-2 text-[0.6rem] uppercase tracking-[0.35em] text-muted-foreground">
-            Concentration / التركيز
-          </span>
-          {CONCS.map((c) => (
-            <Chip
-              key={c.id}
-              en={c.en}
-              ar={c.ar}
-              active={conc === c.id}
-              onClick={() => setConc(c.id)}
-            />
-          ))}
-        </div>
-
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-5">
-          <p className="text-[0.65rem] uppercase tracking-[0.3em] text-muted-foreground">
-            {items.length} Parfums
-            <span className="ar ms-3 text-sm normal-case tracking-normal">
-              {items.length} عطر
-            </span>
-          </p>
-
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="flex items-center gap-1 rounded-full border border-border p-1">
-              {(
-                [
-                  ["grid", "Grid", "شبكة"],
-                  ["gallery", "Gallery", "معرض"],
-                  ["list", "List", "قائمة"],
-                ] as const
-              ).map(([m, en, ar]) => (
-                <button
-                  key={m}
-                  onClick={() => setMode(m)}
-                  className={`rounded-full px-4 py-1.5 text-[0.6rem] uppercase tracking-[0.25em] transition-all duration-500 ${
-                    mode === m
-                      ? "bg-primary/15 text-primary"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  {en}
-                  <span className="ar ms-1.5 text-xs normal-case tracking-normal">
-                    {ar}
-                  </span>
-                </button>
-              ))}
-            </div>
-
-            <select
-              value={sort}
-              onChange={(e) => setSort(e.target.value as typeof sort)}
-              className="rounded-full border border-border bg-transparent px-4 py-2 text-[0.6rem] uppercase tracking-[0.25em] text-muted-foreground outline-none transition-colors hover:border-primary/50 focus:border-primary"
-            >
-              <option value="featured">Featured · مميز</option>
-              <option value="asc">Price ↑ · الأقل سعرًا</option>
-              <option value="desc">Price ↓ · الأعلى سعرًا</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div className={`grid gap-8 ${layout}`}>
-        {items.map((p, i) => (
-          <div
-            key={p.name}
-            className="animate-rise"
-            style={{ animationDelay: `${i * 70}ms` }}
+      <div className="grid gap-8 md:grid-cols-3">
+        {SCENES.map((s) => (
+          <article
+            key={s.name}
+            className="stage-3d group hairline relative overflow-hidden rounded-lg bg-card/40"
           >
-            <ProductCard p={p} mode={mode} />
-          </div>
+            <div className="relative aspect-[4/5] overflow-hidden">
+              <img
+                src={s.img}
+                alt={s.name}
+                loading="lazy"
+                width={1024}
+                height={1280}
+                className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent opacity-80" />
+            </div>
+            <div className="relative -mt-20 p-7">
+              <h3 className="text-3xl font-light text-gold">{s.name}</h3>
+              <p className="ar mt-1 text-lg text-foreground/70">{s.ar}</p>
+              <p className="mt-4 text-[0.7rem] uppercase tracking-[0.3em] text-muted-foreground">
+                {s.notes}
+              </p>
+              <div className="mt-6 flex items-center justify-between">
+                <span className="text-sm text-foreground/80">100 ml · 1,450 EGP</span>
+                <span className="text-xs uppercase tracking-[0.3em] text-primary transition-all group-hover:tracking-[0.45em]">
+                  Discover
+                </span>
+              </div>
+            </div>
+          </article>
         ))}
       </div>
-
-      {items.length === 0 && (
-        <p className="ar py-20 text-center text-lg text-muted-foreground">
-          لا توجد عطور مطابقة لاختيارك.
-        </p>
-      )}
     </section>
   );
 }
