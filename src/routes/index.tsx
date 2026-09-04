@@ -135,7 +135,7 @@ function Hero() {
                   alt={`${s.name} perfume bottle`}
                   width={1024}
                   height={1280}
-                  className="h-full w-full animate-float object-contain drop-shadow-[0_40px_60px_oklch(0_0_0/70%)]"
+                  className="h-full w-full animate-float object-contain mix-blend-screen"
                 />
               </div>
             ))}
