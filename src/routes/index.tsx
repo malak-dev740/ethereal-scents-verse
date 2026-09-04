@@ -1,9 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import bottle1 from "@/assets/bottle-1.jpg.asset.json";
 import bottle2 from "@/assets/bottle-2.jpg.asset.json";
 import bottle3 from "@/assets/bottle-3.jpg.asset.json";
+import bottle4 from "@/assets/bottle-4.jpg.asset.json";
+import bottle5 from "@/assets/bottle-5.jpg.asset.json";
+import bottle6 from "@/assets/bottle-6.jpg.asset.json";
+import bottle7 from "@/assets/bottle-7.jpg.asset.json";
+import bottle8 from "@/assets/bottle-8.jpg.asset.json";
+import bottle9 from "@/assets/bottle-9.jpg.asset.json";
 import heroVideo from "@/assets/hero-video.mp4.asset.json";
 
 
