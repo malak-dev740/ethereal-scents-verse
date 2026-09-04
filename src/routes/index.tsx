@@ -31,21 +31,21 @@ export const Route = createFileRoute("/")({
 
 const SCENES = [
   {
-    img: bottle1,
+    img: bottle1.url,
     name: "Elysium",
     ar: "إليزيوم",
     notes: "Amber · Saffron · Vanilla",
     arNotes: "العنبر · الزعفران · الفانيليا",
   },
   {
-    img: bottle2,
+    img: bottle2.url,
     name: "Émeraude",
     ar: "إميرود",
     notes: "Fig · Vetiver · Green Moss",
     arNotes: "التين · نبات الفيتيفر · الطحلب",
   },
   {
-    img: bottle3,
+    img: bottle3.url,
     name: "Oud Majesté",
     ar: "عود ماجستيه",
     notes: "Oud · Rose · Sandalwood",
@@ -59,6 +59,7 @@ function Hero() {
   const [active, setActive] = useState(0);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const stage = useRef<HTMLDivElement>(null);
+  const scene = SCENES[active]!;
 
   useEffect(() => {
     const id = setInterval(() => setActive((i) => (i + 1) % SCENES.length), DURATION);
@@ -78,7 +79,16 @@ function Hero() {
       }}
       ref={stage}
     >
+      <video
+        src={heroVideo.url}
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-25"
+      />
       <div className="veil pointer-events-none absolute inset-0" />
+      <div className="pointer-events-none absolute inset-0 bg-background/55" />
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[70vmin] w-[70vmin] -translate-x-1/2 -translate-y-1/2 animate-spin-slow rounded-full border border-primary/15" />
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[52vmin] w-[52vmin] -translate-x-1/2 -translate-y-1/2 animate-spin-slow rounded-full border border-primary/10" />
 
@@ -88,17 +98,17 @@ function Hero() {
             Extrait de Parfum
           </p>
           <h1 className="mt-4 text-6xl font-light leading-[0.95] md:text-7xl">
-            <span className="text-gold">{SCENES[active].name}</span>
+            <span className="text-gold">{scene.name}</span>
           </h1>
           <p className="ar mt-3 text-3xl font-light text-foreground/80">
-            {SCENES[active].ar}
+            {scene.ar}
           </p>
           <div className="shimmer-line mx-auto mt-7 h-px w-40 md:mx-0" />
           <p className="mt-5 text-sm tracking-[0.28em] text-muted-foreground uppercase">
-            {SCENES[active].notes}
+            {scene.notes}
           </p>
           <p className="ar mt-2 text-base text-muted-foreground">
-            {SCENES[active].arNotes}
+            {scene.arNotes}
           </p>
         </div>
 
